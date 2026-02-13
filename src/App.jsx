@@ -1,4 +1,4 @@
-import { HashRouter } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import Profile from "./pages/Profile";
 import Todo from "./pages/Todo";
 import Navbar from "./assets/components/Navbar";
