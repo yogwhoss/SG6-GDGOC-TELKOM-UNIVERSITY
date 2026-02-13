@@ -1,52 +1,70 @@
-import React, { useState, useEffect } from "react";
-import "../css/todolist.css";
-import avatar from "../image/profile.webp";
+import { useEffect, useState } from "react";
+import Profile from "../image/profile.webp";
 
-const ProfileCard = () => {
-  const [isDark, setIsDark] = useState(false);
-
+function ProfileCard() {
+  const [dark, setDark] = useState(() => {
+    return localStorage.getItem("darkMode") === "true";
+  });
   useEffect(() => {
-    if (isDark) {
-      document.body.classList.add("dark-mode");
+    localStorage.setItem("darkMode", dark);
+
+    if (dark) {
+      document.documentElement.classList.add("dark");
     } else {
-      document.body.classList.remove("dark-mode");
+      document.documentElement.classList.remove("dark");
     }
-  }, [isDark]);
+  }, [dark]);
 
   return (
-    <div className="card profile-section">
-      <div className="profile-header">
-        <img src={avatar} alt="Avatar" className="avatar" />
+    <div className="bg-white dark:bg-zinc-800 text-gray-800 dark:text-gray-100 w-80 rounded-2xl shadow-md p-6 space-y-4 transition">
+
+      <div className="flex items-center gap-4">
+        <img
+          src={Profile}
+          alt="Profile"
+          className="w-14 h-14 rounded-full object-cover"
+        />
+
         <div>
-          <h2 id="name-display">Yogi Permana Jati</h2>
-          <p className="role">Frontend Developer</p>
+          <h2 className="font-semibold text-lg">Yogi Permana Jati</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm">
+            Frontend Developer
+          </p>
         </div>
       </div>
 
-      <p className="bio">
-        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Dolorem
-        voluptates eius nisi iusto error, quo illo, reprehenderit eum maiores
-        facilis perspiciatis porro? Consequatur ad recusandae hic deleniti
-        blanditiis quaerat obcaecati.
+      <p className="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+        Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+        Dolorem voluptates eius nisi iusto error, quo illo,
+        reprehenderit eum maiores facilis.
       </p>
+      <div className="flex items-center justify-between pt-2">
+        <span className="text-sm">
+          Dark Mode
+        </span>
 
-     <div className="theme-switch">
-    <input
-        type="checkbox"
-        id="darkModeToggle"
-        checked={isDark}
-        onChange={() => setIsDark(!isDark)}
-    />
-    <label htmlFor="darkModeToggle" className="switch">
-        <span className="slider" />
-    </label>
-    <span className="mode-text">
-        {isDark ? "Dark Mode" : "Light Mode"}
-    </span>
-    </div>
+        <label className="relative inline-flex items-center cursor-pointer">
+          <input
+            type="checkbox"
+            checked={dark}
+            onChange={() => setDark(!dark)}
+            className="sr-only peer"
+          />
+          <div
+            className="w-11 h-6 bg-gray-300 dark:bg-zinc-600
+            rounded-full transition
+            peer-checked:bg-blue-500"
+          ></div>
+          <div
+            className="absolute left-1 top-1 w-4 h-4 bg-white
+            rounded-full transition
+            peer-checked:translate-x-5"
+          ></div>
+        </label>
+      </div>
 
     </div>
   );
-};
+}
 
 export default ProfileCard;
